@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { postLogin } from '@/services/xapi-backend/yonghuxiangguan';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -19,7 +19,6 @@ import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { Helmet, history, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
@@ -75,9 +74,9 @@ const LoginMessage: React.FC<{
   );
 };
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [userLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { setInitialState } = useModel('@@initialState');
   const containerClassName = useEmotionCss(() => {
     return {
       display: 'flex',
@@ -89,38 +88,28 @@ const Login: React.FC = () => {
       backgroundSize: '100% 100%',
     };
   });
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s) => ({
-          ...s,
-          currentUser: userInfo,
-        }));
-      });
-    }
-  };
-  const handleSubmit = async (values: API.LoginParams) => {
+  const handleSubmit = async (values: API.loginUserParams) => {
     try {
       // 登录
-      const msg = await login({
+      const res = await postLogin({
         ...values,
-        type,
       });
-      if (msg.status === 'ok') {
-        const defaultLoginSuccessMessage = '登录成功！';
-        message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+      if (res.result === 0) {
+        // 创建一个新的URL对象，并获取当前window.location.href的查询参数
         const urlParams = new URL(window.location.href).searchParams;
+        // 将用户重定向到'redirect'参数指定的URL，如果'redirect'参数不存在，则重定向到首页'/'
         history.push(urlParams.get('redirect') || '/');
+        // 用登录用户的数据更新初始状态
+        setInitialState({
+          loginUser: res.data,
+        });
         return;
       }
-      console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
+      console.log(res);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       console.log(error);
+      // 使用message组件显示错误信息
       message.error(defaultLoginFailureMessage);
     }
   };
@@ -152,7 +141,7 @@ const Login: React.FC = () => {
           }}
           actions={['其他登录方式 :', <ActionIcons key="icons" />]}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+            await handleSubmit(values as API.loginUserParams);
           }}
         >
           <Tabs
@@ -177,7 +166,7 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="username"
+                name="useraccount"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
@@ -191,7 +180,7 @@ const Login: React.FC = () => {
                 ]}
               />
               <ProFormText.Password
-                name="password"
+                name="userpassword"
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined />,
