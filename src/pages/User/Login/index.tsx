@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import { postLogin } from '@/services/xapi-backend/yonghuxiangguan';
+import { postUserLogin } from '@/services/xapi-backend/yonghuxiangguan';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -91,14 +91,17 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.loginUserParams) => {
     try {
       // 登录
-      const res = await postLogin({
+      const res = await postUserLogin({
         ...values,
       });
       if (res.result === 0) {
         // 创建一个新的URL对象，并获取当前window.location.href的查询参数
         const urlParams = new URL(window.location.href).searchParams;
-        // 将用户重定向到'redirect'参数指定的URL，如果'redirect'参数不存在，则重定向到首页'/'
-        history.push(urlParams.get('redirect') || '/');
+        // 定时器出发后，导航到重定向URL，如果没有就导航到根路径【解决：登录页需要点击两次登录才能进入的问题】
+        setTimeout(() => {
+          // 将用户重定向到'redirect'参数指定的URL，如果'redirect'参数不存在，则重定向到首页'/'
+          history.push(urlParams.get('redirect') || '/');
+        }, 100);
         // 用登录用户的数据更新初始状态
         setInitialState({
           loginUser: res.data,

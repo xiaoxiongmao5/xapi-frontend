@@ -6,7 +6,7 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
 import { requestConfig } from './requestConfig';
-import { getUserinfo } from './services/xapi-backend/yonghuxiangguan';
+import { getUserUinfo } from './services/xapi-backend/yonghuxiangguan';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -20,7 +20,7 @@ export async function getInitialState(): Promise<InitialState> {
     loginUser: undefined,
   };
   try {
-    const res = await getUserinfo();
+    const res = await getUserUinfo();
     if (res.result === 0) {
       state.loginUser = res.data;
     }

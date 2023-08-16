@@ -9,9 +9,4 @@ declare namespace API {
     userpassword?: string;
     userrole?: string;
   };
-
-  type getLogoutParams = {
-    /** 账户名称 */
-    useraccount: string;
-  };
 }
