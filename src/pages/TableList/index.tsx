@@ -1,4 +1,5 @@
-import { addRule, removeRule, rule, updateRule } from '@/services/ant-design-pro/api';
+import { addRule, removeRule, updateRule } from '@/services/ant-design-pro/api';
+import { getInterfaceList } from '@/services/xapi-backend/jiekouxiangguan';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {
@@ -11,7 +12,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Button, Drawer, Input, message } from 'antd';
+import { Button, Drawer, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
@@ -106,21 +107,27 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<API.RuleListItem>[] = [
     {
-      title: '规则名称',
+      title: 'id',
+      dataIndex: 'id',
+      valueType: 'index',
+    },
+    {
+      title: '接口名称',
       dataIndex: 'name',
-      tip: 'The rule name is the unique key',
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      valueType: 'text',
+      // tip: 'The rule name is the unique key',
+      // render: (dom, entity) => {
+      //   return (
+      //     <a
+      //       onClick={() => {
+      //         setCurrentRow(entity);
+      //         setShowDetail(true);
+      //       }}
+      //     >
+      //       {dom}
+      //     </a>
+      //   );
+      // },
     },
     {
       title: '描述',
@@ -128,11 +135,24 @@ const TableList: React.FC = () => {
       valueType: 'textarea',
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) => `${val}${'万'}`,
+      title: '请求方法',
+      dataIndex: 'method',
+      valueType: 'text',
+    },
+    {
+      title: '接口地址',
+      dataIndex: 'url',
+      valueType: 'text',
+    },
+    {
+      title: '请求头',
+      dataIndex: 'requestheader',
+      valueType: 'textarea',
+    },
+    {
+      title: '响应头',
+      dataIndex: 'responseheader',
+      valueType: 'textarea',
     },
     {
       title: '状态',
@@ -144,34 +164,20 @@ const TableList: React.FC = () => {
           status: 'Default',
         },
         1: {
-          text: '运行中',
+          text: '开启',
           status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
-          status: 'Error',
         },
       },
     },
     {
-      title: '上次调度时间',
-      sorter: true,
-      dataIndex: 'updatedAt',
+      title: '创建时间',
+      dataIndex: 'createtime',
       valueType: 'dateTime',
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-        if (`${status}` === '0') {
-          return false;
-        }
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder={'请输入异常原因！'} />;
-        }
-        return defaultRender(item);
-      },
+    },
+    {
+      title: '更新时间',
+      dataIndex: 'updatetime',
+      valueType: 'dateTime',
     },
     {
       title: '操作',
@@ -213,7 +219,24 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={rule}
+        //request的触发时机：1 当打开页面或刚加载表格时；2 当手动点击刷新按钮时；3 当点击查询按钮时；
+        request={getInterfaceList}
+        // request={async (
+        //   params,
+        //   sort: Record<string, SortOrder>,
+        //   filter: Record<string, (string | number)[] | null>,
+        // ) => {
+        //   const res = await getInterfaceList({
+        //     ...params,
+        //   });
+        //   if (res?.result === 0) {
+        //     return {
+        //       data: res?.data || [],
+        //       success: true,
+        //       total: res.total,
+        //     };
+        //   }
+        // }}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
