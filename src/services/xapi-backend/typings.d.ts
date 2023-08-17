@@ -1,4 +1,15 @@
 declare namespace API {
+  type CreateInterfaceParams = {
+    description?: string;
+    method?: string;
+    name?: string;
+    requestheader?: string;
+    requestparams?: string;
+    responseheader?: string;
+    url?: string;
+    userid?: number;
+  };
+
   type CreateUserParamsJSON = {
     accesskey?: string;
     gender?: number;
@@ -8,5 +19,23 @@ declare namespace API {
     username?: string;
     userpassword?: string;
     userrole?: string;
+  };
+
+  type getInterface_openAPI_deleteParams = {
+    /** 接口Id */
+    id: number;
+  };
+
+  type UpdateInterfaceParams = {
+    description?: string;
+    id?: number;
+    method?: string;
+    name?: string;
+    requestheader?: string;
+    requestparams?: string;
+    responseheader?: string;
+    status?: number;
+    url?: string;
+    userid?: number;
   };
 }
