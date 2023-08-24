@@ -21,9 +21,8 @@ declare namespace API {
     userrole?: string;
   };
 
-  type getInterface_openAPI_deleteParams = {
-    /** 接口Id */
-    id: number;
+  type IdRequest = {
+    id?: number;
   };
 
   type UpdateInterfaceParams = {

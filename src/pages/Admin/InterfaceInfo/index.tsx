@@ -1,8 +1,10 @@
 import {
+  deleteInterface__openAPI__delete,
   getInterfaceList,
-  getInterface__openAPI__delete,
   postInterfaceRegister,
-  postInterfaceUpdate,
+  putInterfaceOffline,
+  putInterfaceOnline,
+  putInterfaceUpdate,
 } from '@/services/xapi-backend/jiekouxiangguan';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
@@ -74,7 +76,7 @@ const TableList: React.FC = () => {
     }
     const hide = message.loading('修改中');
     try {
-      await postInterfaceUpdate({
+      await putInterfaceUpdate({
         id: currentRow.id,
         ...fields,
       });
@@ -94,11 +96,11 @@ const TableList: React.FC = () => {
    *
    * @param selectedRows
    */
-  const handleRemove = async (record: API.UpdateInterfaceParams) => {
+  const handleRemove = async (record: API.IdRequest) => {
     const hide = message.loading('正在删除');
     if (!record) return true;
     try {
-      await getInterface__openAPI__delete({
+      await deleteInterface__openAPI__delete({
         id: record.id,
       });
       hide();
@@ -109,6 +111,54 @@ const TableList: React.FC = () => {
     } catch (error: any) {
       hide();
       message.error('删除失败，' + error.message);
+      return false;
+    }
+  };
+
+  /**
+   *  Delete node
+   * @zh-CN 发布接口
+   *
+   * @param selectedRows
+   */
+  const handleOnline = async (record: API.IdRequest) => {
+    const hide = message.loading('发布中');
+    if (!record) return true;
+    try {
+      await putInterfaceOnline({
+        id: record.id,
+      });
+      hide();
+      message.success('操作成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error: any) {
+      hide();
+      message.error('操作失败，' + error.message);
+      return false;
+    }
+  };
+
+  /**
+   *  Delete node
+   * @zh-CN 下线接口
+   *
+   * @param selectedRows
+   */
+  const handleOffline = async (record: API.IdRequest) => {
+    const hide = message.loading('下线中');
+    if (!record) return true;
+    try {
+      await putInterfaceOffline({
+        id: record.id,
+      });
+      hide();
+      message.success('操作成功');
+      actionRef.current?.reload();
+      return true;
+    } catch (error: any) {
+      hide();
+      message.error('操作失败，' + error.message);
       return false;
     }
   };
@@ -216,14 +266,36 @@ const TableList: React.FC = () => {
         >
           修改
         </a>,
-        <a
-          key="config"
+        record.status === 0 ? (
+          <a
+            key="config"
+            onClick={() => {
+              handleOnline(record);
+            }}
+          >
+            发布
+          </a>
+        ) : null,
+        record.status === 1 ? (
+          <a
+            key="online"
+            onClick={() => {
+              handleOffline(record);
+            }}
+          >
+            下线
+          </a>
+        ) : null,
+        <Button
+          type="text"
+          danger
+          key="offline"
           onClick={() => {
             handleRemove(record);
           }}
         >
           删除
-        </a>,
+        </Button>,
       ],
     },
   ];
