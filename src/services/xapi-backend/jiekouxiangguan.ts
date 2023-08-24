@@ -2,6 +2,20 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+/** 根据接口id获取接口信息 根据接口id获取接口信息 GET /interface/${param0} */
+export async function getInterfaceId(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInterfaceIdParams,
+  options?: { [key: string]: any },
+) {
+  const { id: param0, ...queryParams } = params;
+  return request<API.ResponseWithData>(`/interface/${param0}`, {
+    method: 'GET',
+    params: { ...queryParams },
+    ...(options || {}),
+  });
+}
+
 /** 删除接口 删除接口 DELETE /interface/delete */
 export async function deleteInterface__openAPI__delete(
   body: API.IdRequest,

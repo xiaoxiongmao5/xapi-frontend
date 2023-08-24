@@ -3,13 +3,17 @@ import { PageContainer } from '@ant-design/pro-components';
 import { List, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
+/**
+ * 主页
+ * @constructor
+ */
 const Index: React.FC = () => {
   // 使用 useState 和泛型来定义组件内的状态
   // const [initLoading, setInitLoading] = useState(true);
   // 加载状态
   const [loading, setLoading] = useState(false);
   // 列表数据
-  const [list, setList] = useState<API.UpdateInterfaceParams[]>([]);
+  const [list, setList] = useState<API.ValidXapiInterfaceInfo[]>([]);
   // 总数
   const [total, setTotal] = useState<number>(0);
 
@@ -48,15 +52,27 @@ const Index: React.FC = () => {
         // 将列表数据作为数据源传递给 List 组件
         dataSource={list}
         // 渲染每个列表项
-        renderItem={(item) => (
-          <List.Item actions={[<a key="list-loadmore-edit">查看</a>]}>
-            <List.Item.Meta
-              // href要改成接口文档的链接
-              title={<a href="https://ant.design">{item.name}</a>}
-              description={item.description}
-            />
-          </List.Item>
-        )}
+        renderItem={(item) => {
+          // 构建列表项的链接地址
+          const apiLink = `/interface_info/${item.id}`;
+          return (
+            // 显式查看链接
+            <List.Item
+              actions={[
+                <a key={item.id} href={apiLink}>
+                  查看
+                </a>,
+              ]}
+            >
+              <List.Item.Meta
+                //列表项标题显示为可点击的链接
+                title={<a href={apiLink}>{item.name}</a>}
+                // 列表项描述
+                description={item.description}
+              />
+            </List.Item>
+          );
+        }}
         // 分页配置
         pagination={{
           // 自定义显示总是
