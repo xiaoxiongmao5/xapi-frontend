@@ -1,4 +1,5 @@
 export default [
+  { name: '主页', path: '/', icon: 'smile', component: './Index' },
   {
     // name: '登录',
     path: '/user',
@@ -19,7 +20,6 @@ export default [
       },
     ],
   },
-  // { name: '欢迎页面', path: '/welcome', icon: 'smile', component: './Welcome' },
   // { icon: 'table', path: '/list', component: './TableList', name: '表格页' },
   // { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },

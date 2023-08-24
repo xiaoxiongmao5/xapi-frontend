@@ -21,6 +21,13 @@ declare namespace API {
     userrole?: string;
   };
 
+  type getInterfacePagelistParams = {
+    /** pageSize */
+    pageSize: number;
+    /** current */
+    current: number;
+  };
+
   type IdRequest = {
     id?: number;
   };

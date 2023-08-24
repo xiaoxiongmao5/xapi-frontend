@@ -1,9 +1,9 @@
 import {
   deleteInterface__openAPI__delete,
   getInterfaceList,
+  patchInterfaceOffline,
+  patchInterfaceOnline,
   postInterfaceRegister,
-  putInterfaceOffline,
-  putInterfaceOnline,
   putInterfaceUpdate,
 } from '@/services/xapi-backend/jiekouxiangguan';
 import { PlusOutlined } from '@ant-design/icons';
@@ -125,7 +125,7 @@ const TableList: React.FC = () => {
     const hide = message.loading('发布中');
     if (!record) return true;
     try {
-      await putInterfaceOnline({
+      await patchInterfaceOnline({
         id: record.id,
       });
       hide();
@@ -149,7 +149,7 @@ const TableList: React.FC = () => {
     const hide = message.loading('下线中');
     if (!record) return true;
     try {
-      await putInterfaceOffline({
+      await patchInterfaceOffline({
         id: record.id,
       });
       hide();

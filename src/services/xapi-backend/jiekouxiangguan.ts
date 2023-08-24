@@ -17,7 +17,7 @@ export async function deleteInterface__openAPI__delete(
   });
 }
 
-/** 获得接口列表 获取接口列表信息 GET /interface/list */
+/** 获得所有接口列表 获取所有接口列表 GET /interface/list */
 export async function getInterfaceList(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/interface/list', {
     method: 'GET',
@@ -25,10 +25,10 @@ export async function getInterfaceList(options?: { [key: string]: any }) {
   });
 }
 
-/** 下线接口 下线接口 PUT /interface/offline */
-export async function putInterfaceOffline(body: API.IdRequest, options?: { [key: string]: any }) {
+/** 下线接口 下线接口 PATCH /interface/offline */
+export async function patchInterfaceOffline(body: API.IdRequest, options?: { [key: string]: any }) {
   return request<Record<string, any>>('/interface/offline', {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -37,14 +37,29 @@ export async function putInterfaceOffline(body: API.IdRequest, options?: { [key:
   });
 }
 
-/** 发布接口 发布接口 PUT /interface/online */
-export async function putInterfaceOnline(body: API.IdRequest, options?: { [key: string]: any }) {
+/** 发布接口 发布接口 PATCH /interface/online */
+export async function patchInterfaceOnline(body: API.IdRequest, options?: { [key: string]: any }) {
   return request<Record<string, any>>('/interface/online', {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
     data: body,
+    ...(options || {}),
+  });
+}
+
+/** 分页获得接口列表 分页获取接口列表 GET /interface/pagelist */
+export async function getInterfacePagelist(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInterfacePagelistParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/interface/pagelist', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
