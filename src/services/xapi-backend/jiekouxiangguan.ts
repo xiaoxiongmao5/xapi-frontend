@@ -31,6 +31,21 @@ export async function deleteInterface__openAPI__delete(
   });
 }
 
+/** 调用接口 调用接口 POST /interface/invoke */
+export async function postInterfaceInvoke(
+  body: API.InvokeInterfaceParams,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/interface/invoke', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** 获得所有接口列表 获取所有接口列表 GET /interface/list */
 export async function getInterfaceList(options?: { [key: string]: any }) {
   return request<Record<string, any>>('/interface/list', {

@@ -202,7 +202,7 @@ const TableList: React.FC = () => {
     },
     {
       title: '描述',
-      dataIndex: 'desc',
+      dataIndex: 'description',
       valueType: 'textarea',
     },
     {
@@ -216,14 +216,19 @@ const TableList: React.FC = () => {
       valueType: 'text',
     },
     {
+      title: '请求参数',
+      dataIndex: 'requestparams',
+      valueType: 'jsonCode',
+    },
+    {
       title: '请求头',
       dataIndex: 'requestheader',
-      valueType: 'textarea',
+      valueType: 'jsonCode',
     },
     {
       title: '响应头',
       dataIndex: 'responseheader',
-      valueType: 'textarea',
+      valueType: 'jsonCode',
     },
     {
       title: '状态',

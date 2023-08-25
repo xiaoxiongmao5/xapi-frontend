@@ -11,14 +11,9 @@ declare namespace API {
   };
 
   type CreateUserParamsJSON = {
-    accesskey?: string;
-    gender?: number;
-    secretkey?: string;
-    useraccount?: string;
-    useravatar?: string;
-    username?: string;
-    userpassword?: string;
-    userrole?: string;
+    checkUserPassword?: string;
+    userAccount?: string;
+    userPassword?: string;
   };
 
   type getInterfaceIdParams = {
@@ -37,6 +32,11 @@ declare namespace API {
     id?: number;
   };
 
+  type InvokeInterfaceParams = {
+    id?: number;
+    requestparams?: string;
+  };
+
   type ResponseWithData = {
     data?: ValidXapiInterfaceInfo;
     msg?: string;
@@ -51,7 +51,6 @@ declare namespace API {
     requestheader?: string;
     requestparams?: string;
     responseheader?: string;
-    status?: number;
     url?: string;
     userid?: number;
   };
@@ -69,7 +68,10 @@ declare namespace API {
     name?: string;
     /** 请求头 */
     requestheader?: string;
-    /** 请求参数 */
+    /** * 请求参数
+	[
+		{"name":"xxx", "type":"string"}
+	] */
     requestparams?: string;
     /** 响应头 */
     responseheader?: string;
