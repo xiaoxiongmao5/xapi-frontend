@@ -1,6 +1,7 @@
 declare namespace API {
   type CreateInterfaceParams = {
     description?: string;
+    host?: string;
     method?: string;
     name?: string;
     requestheader?: string;
@@ -45,6 +46,7 @@ declare namespace API {
 
   type UpdateInterfaceParams = {
     description?: string;
+    host?: string;
     id?: number;
     method?: string;
     name?: string;
@@ -60,6 +62,8 @@ declare namespace API {
     createtime?: string;
     /** 描述 */
     description?: string;
+    /** 接口地址 */
+    host?: string;
     /** 主键 */
     id?: number;
     /** 请求类型 */

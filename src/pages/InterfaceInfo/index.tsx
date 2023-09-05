@@ -1,4 +1,5 @@
-import { getInterfaceId, postInterfaceInvoke } from '@/services/xapi-backend/jiekouxiangguan';
+import { postApiInvoke } from '@/services/xapi-backend/jiekoudiaoyongxiangguan';
+import { getInterfaceId } from '@/services/xapi-backend/jiekouxiangguan';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Descriptions, Divider, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -49,7 +50,6 @@ const Index: React.FC = () => {
   }, []);
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values);
     // 检查是否存在接口Id
     if (!params.id) {
       message.error('接口不存在');
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
     try {
       // 发起接口调用请求，传入一个对象作为参数，这个对象包含了id 和 values的属性
       // 其中，id 是从 params中获取的，而 values是函数的参数
-      const res = await postInterfaceInvoke({
+      const res = await postApiInvoke({
         id: Number(params.id),
         ...values,
       });
@@ -82,6 +82,7 @@ const Index: React.FC = () => {
           <Descriptions title={data.name} column={1}>
             <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
             <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
+            <Descriptions.Item label="域名">{data.host}</Descriptions.Item>
             <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
             <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
             <Descriptions.Item label="请求参数">{data.requestparams}</Descriptions.Item>
