@@ -45,7 +45,7 @@ export async function getUserLogout(options?: { [key: string]: any }) {
 
 /** 用户注册 用户注册 POST /user/register */
 export async function postUserRegister(
-  body: API.CreateUserParamsJSON,
+  body: API.UserRegisterParams,
   options?: { [key: string]: any },
 ) {
   return request<Record<string, any>>('/user/register', {

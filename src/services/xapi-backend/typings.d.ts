@@ -11,12 +11,6 @@ declare namespace API {
     userid?: number;
   };
 
-  type CreateUserParamsJSON = {
-    checkUserPassword?: string;
-    userAccount?: string;
-    userPassword?: string;
-  };
-
   type getInterfaceIdParams = {
     /** 接口id */
     id: number;
@@ -55,6 +49,17 @@ declare namespace API {
     responseheader?: string;
     url?: string;
     userid?: number;
+  };
+
+  type UpdateInvokeLeftCountParams = {
+    interfaceId?: number;
+    leftNum?: number;
+  };
+
+  type UserRegisterParams = {
+    checkUserpassword?: string;
+    useraccount?: string;
+    userpassword?: string;
   };
 
   type ValidXapiInterfaceInfo = {

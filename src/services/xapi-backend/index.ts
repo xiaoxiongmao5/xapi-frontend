@@ -5,8 +5,10 @@
 import * as jiekoudiaoyongxiangguan from './jiekoudiaoyongxiangguan';
 import * as jiekouxiangguan from './jiekouxiangguan';
 import * as yonghuxiangguan from './yonghuxiangguan';
+import * as yonghuyujiekouguanxi from './yonghuyujiekouguanxi';
 export default {
   jiekoudiaoyongxiangguan,
   jiekouxiangguan,
+  yonghuyujiekouguanxi,
   yonghuxiangguan,
 };

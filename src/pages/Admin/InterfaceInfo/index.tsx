@@ -268,7 +268,7 @@ const TableList: React.FC = () => {
       valueType: 'option',
       render: (_, record) => [
         <a
-          key="config"
+          key="update"
           onClick={() => {
             handleUpdateModalOpen(true);
             setCurrentRow(record);
@@ -278,7 +278,7 @@ const TableList: React.FC = () => {
         </a>,
         record.status === 0 ? (
           <a
-            key="config"
+            key="online"
             onClick={() => {
               handleOnline(record);
             }}
@@ -288,7 +288,7 @@ const TableList: React.FC = () => {
         ) : null,
         record.status === 1 ? (
           <a
-            key="online"
+            key="offline"
             onClick={() => {
               handleOffline(record);
             }}
@@ -299,7 +299,7 @@ const TableList: React.FC = () => {
         <Button
           type="text"
           danger
-          key="offline"
+          key="delete"
           onClick={() => {
             handleRemove(record);
           }}
