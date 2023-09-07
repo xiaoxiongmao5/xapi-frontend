@@ -16,11 +16,28 @@ declare namespace API {
     id: number;
   };
 
+  type GetInterfaceInfoByIdResponse = {
+    data?: ValidInterfaceInfo;
+    msg?: string;
+    result?: number;
+  };
+
   type getInterfacePagelistParams = {
     /** pageSize */
     pageSize: number;
     /** current */
     current: number;
+  };
+
+  type getUserinterfaceIdParams = {
+    /** 接口id */
+    id: number;
+  };
+
+  type GetUserInterfaceInfoByIdResponse = {
+    data?: ValidUserInterfaceInfo;
+    msg?: string;
+    result?: number;
   };
 
   type IdRequest = {
@@ -30,12 +47,6 @@ declare namespace API {
   type InvokeInterfaceParams = {
     id?: number;
     requestparams?: string;
-  };
-
-  type ResponseWithData = {
-    data?: ValidXapiInterfaceInfo;
-    msg?: string;
-    result?: number;
   };
 
   type UpdateInterfaceParams = {
@@ -62,7 +73,7 @@ declare namespace API {
     userpassword?: string;
   };
 
-  type ValidXapiInterfaceInfo = {
+  type ValidInterfaceInfo = {
     /** 创建时间 */
     createtime?: string;
     /** 描述 */
@@ -86,6 +97,40 @@ declare namespace API {
     responseheader?: string;
     /** 接口状态（0-关闭，1-开启） */
     status?: number;
+    /** 更新时间 */
+    updatetime?: string;
+    /** 接口地址 */
+    url?: string;
+    /** 创建人 */
+    userid?: number;
+  };
+
+  type ValidUserInterfaceInfo = {
+    banstatus?: number;
+    /** 创建时间 */
+    createtime?: string;
+    /** 描述 */
+    description?: string;
+    /** 接口地址 */
+    host?: string;
+    /** 主键(接口ID) */
+    id?: number;
+    /** 剩余调用次数 */
+    leftnum?: number;
+    /** 请求类型 */
+    method?: string;
+    /** 名称 */
+    name?: string;
+    /** 请求头 */
+    requestheader?: string;
+    /** 请求参数 [{"name":"xxx", "type":"string"}] */
+    requestparams?: string;
+    /** 响应头 */
+    responseheader?: string;
+    /** 接口状态（0-关闭，1-开启） */
+    status?: number;
+    /** 总调用次数 */
+    totalnum?: number;
     /** 更新时间 */
     updatetime?: string;
     /** 接口地址 */

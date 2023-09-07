@@ -9,6 +9,6 @@ import * as yonghuyujiekouguanxi from './yonghuyujiekouguanxi';
 export default {
   jiekoudiaoyongxiangguan,
   jiekouxiangguan,
-  yonghuyujiekouguanxi,
   yonghuxiangguan,
+  yonghuyujiekouguanxi,
 };

@@ -9,7 +9,7 @@ export async function getInterfaceId(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.ResponseWithData>(`/interface/${param0}`, {
+  return request<API.GetInterfaceInfoByIdResponse>(`/interface/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),

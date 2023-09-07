@@ -1,5 +1,8 @@
 import { postApiInvoke } from '@/services/xapi-backend/jiekoudiaoyongxiangguan';
-import { getInterfaceId } from '@/services/xapi-backend/jiekouxiangguan';
+import {
+  getUserinterfaceId,
+  postUserinterfaceUpdateLeftcount,
+} from '@/services/xapi-backend/yonghuyujiekouguanxi';
 import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Descriptions, Divider, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +15,7 @@ import { useParams } from 'react-router';
 const Index: React.FC = () => {
   // 定义状态和钩子函数
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<API.ValidXapiInterfaceInfo>();
+  const [data, setData] = useState<API.ValidUserInterfaceInfo>();
   // 存储结果变量
   const [invokeRes, setInvokeRes] = useState<any>();
   // 调用加载状态变量，默认为false
@@ -31,7 +34,7 @@ const Index: React.FC = () => {
     setLoading(true);
     try {
       // 发起请求获取接口信息，接受一个包含 id 参数的对象作为参数
-      const res = await getInterfaceId({
+      const res = await getUserinterfaceId({
         id: Number(params.id),
       });
       // 将获取到的接口信息设置到 data 状态中
@@ -48,6 +51,29 @@ const Index: React.FC = () => {
     // 页面加载完成后调用加载数据的函数
     loadData();
   }, []);
+
+  // 购买
+  const showAddOrderModal = async () => {
+    message.error('该功能暂未上线，敬请期待！');
+  };
+
+  // 获取调用体验次数10次
+  const getFreeInterface = async () => {
+    setLoading(true);
+    try {
+      const res = await postUserinterfaceUpdateLeftcount({
+        interfaceId: data?.id,
+        leftNum: 10,
+      });
+      message.success('获取调用体验次数成功');
+      console.log(res);
+    } catch (error: any) {
+      // 请求失败时提示错误信息
+      message.error('获取失败请重试，' + error.message);
+    }
+    setLoading(false);
+    loadData();
+  };
 
   const onFinish = async (values: any) => {
     // 检查是否存在接口Id
@@ -72,6 +98,7 @@ const Index: React.FC = () => {
     }
     // 无论成功或失败，最后将 invokeLoading 设置为false，表示加载完成
     setInitLoading(false);
+    loadData();
   };
 
   return (
@@ -79,9 +106,21 @@ const Index: React.FC = () => {
     <PageContainer title="查看接口文档">
       <Card loading={loading}>
         {data ? (
-          <Descriptions title={data.name} column={1}>
+          <Descriptions
+            title={data.name}
+            column={1}
+            extra={
+              data.leftnum === 0 && data.totalnum === 0 ? (
+                <Button onClick={getFreeInterface}>获取体验调用次数</Button>
+              ) : (
+                <Button onClick={showAddOrderModal}>购买</Button>
+              )
+            }
+          >
             <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
             <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
+            <Descriptions.Item label="接口剩余调用次数">{data.leftnum}次</Descriptions.Item>
+            <Descriptions.Item label="接口总调用次数">{data.totalnum}次</Descriptions.Item>
             <Descriptions.Item label="域名">{data.host}</Descriptions.Item>
             <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
             <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
