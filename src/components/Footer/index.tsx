@@ -1,9 +1,9 @@
-import { GithubOutlined } from '@ant-design/icons';
+import { BookFilled, GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-components';
 import '@umijs/max';
 import React from 'react';
 const Footer: React.FC = () => {
-  const defaultMessage = '蚂蚁集团体验技术部出品';
+  const defaultMessage = '程序媛-小熊出品';
   const currentYear = new Date().getFullYear();
   return (
     <DefaultFooter
@@ -13,21 +13,27 @@ const Footer: React.FC = () => {
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: 'GitHub',
+          title: 'GitHub',
+          href: 'https://github.com/xiaoxiongmao5/xapi-backend',
           blankTarget: true,
         },
         {
           key: 'github',
           title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          href: 'https://github.com/xiaoxiongmao5',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: 'blob',
+          title: <BookFilled />,
+          href: 'https://blog.csdn.net/trinityleo5',
+          blankTarget: true,
+        },
+        {
+          key: 'Blob',
+          title: 'XAPI',
+          href: 'https://github.com/xiaoxiongmao5/xapi-backend',
           blankTarget: true,
         },
       ]}

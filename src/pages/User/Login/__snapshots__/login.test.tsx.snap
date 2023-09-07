@@ -189,11 +189,11 @@ exports[`Login Page should login success 1`] = `
                   <img
                     alt="logo"
                     height="22"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+                    src="/wechatphoto.jpeg"
                     width="auto"
                   />
                   <h1>
-                    Ant Design Pro
+                    XAPI
                   </h1>
                 </a>
               </div>
@@ -625,7 +625,7 @@ exports[`Login Page should show login form 1`] = `
             >
               <img
                 alt="logo"
-                src="/logo.svg"
+                src="/wechatphoto.jpeg"
               />
             </span>
             <span
