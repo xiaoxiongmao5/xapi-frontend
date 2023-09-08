@@ -58,7 +58,7 @@ const TableList: React.FC = () => {
       return true;
     } catch (error: any) {
       hide();
-      message.error('创建失败，' + error.message);
+      // message.error('创建失败，' + error.message);
       return false;
     }
   };
@@ -85,7 +85,7 @@ const TableList: React.FC = () => {
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      // message.error('操作失败，' + error.message);
       return false;
     }
   };
@@ -110,7 +110,7 @@ const TableList: React.FC = () => {
       return true;
     } catch (error: any) {
       hide();
-      message.error('删除失败，' + error.message);
+      // message.error('删除失败，' + error.message);
       return false;
     }
   };
@@ -134,7 +134,7 @@ const TableList: React.FC = () => {
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      // message.error('操作失败，' + error.message);
       return false;
     }
   };
@@ -158,7 +158,7 @@ const TableList: React.FC = () => {
       return true;
     } catch (error: any) {
       hide();
-      message.error('操作失败，' + error.message);
+      // message.error('操作失败，' + error.message);
       return false;
     }
   };

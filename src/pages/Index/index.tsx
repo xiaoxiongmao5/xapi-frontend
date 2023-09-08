@@ -1,6 +1,6 @@
 import { getInterfacePagelist } from '@/services/xapi-backend/jiekouxiangguan';
 import { PageContainer } from '@ant-design/pro-components';
-import { List, message } from 'antd';
+import { List } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 /**
@@ -30,7 +30,7 @@ const Index: React.FC = () => {
       setTotal(res?.data?.total ?? 0);
     } catch (error: any) {
       // 请求失败时提示错误信息
-      message.error('请求失败，' + error.message);
+      // message.error('请求失败，' + error.message);
     }
     // 数据加载成功或失败后，设置loading状态为false
     setLoading(false);

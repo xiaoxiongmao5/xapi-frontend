@@ -91,26 +91,22 @@ const Login: React.FC = () => {
       const res = await postUserLogin({
         ...values,
       });
-      if (res.result === 0) {
-        // 创建一个新的URL对象，并获取当前window.location.href的查询参数
-        const urlParams = new URL(window.location.href).searchParams;
-        // 定时器出发后，导航到重定向URL，如果没有就导航到根路径【解决：登录页需要点击两次登录才能进入的问题】
-        setTimeout(() => {
-          // 将用户重定向到'redirect'参数指定的URL，如果'redirect'参数不存在，则重定向到首页'/'
-          history.push(urlParams.get('redirect') || '/');
-        }, 100);
-        // 用登录用户的数据更新初始状态
-        setInitialState({
-          loginUser: res.data,
-        });
-        return;
-      }
+      // 创建一个新的URL对象，并获取当前window.location.href的查询参数
+      const urlParams = new URL(window.location.href).searchParams;
+      // 定时器出发后，导航到重定向URL，如果没有就导航到根路径【解决：登录页需要点击两次登录才能进入的问题】
+      setTimeout(() => {
+        // 将用户重定向到'redirect'参数指定的URL，如果'redirect'参数不存在，则重定向到首页'/'
+        history.push(urlParams.get('redirect') || '/');
+      }, 100);
+      // 用登录用户的数据更新初始状态
+      setInitialState({
+        loginUser: res.data,
+      });
       console.log(res);
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！';
-      console.log(error);
-      // 使用message组件显示错误信息
-      message.error(defaultLoginFailureMessage);
+      // const defaultLoginFailureMessage = '登录失败，请重试！';
+      // // 使用message组件显示错误信息
+      // message.error(defaultLoginFailureMessage);
     }
   };
   const handleRegist = async (values: API.UserRegisterParams) => {
@@ -118,33 +114,18 @@ const Login: React.FC = () => {
       message.error('两次密码输入不一致，请重新输入！');
       return;
     }
-    let len_name = values.useraccount?.length;
-    let len_pwd = values.userpassword?.length;
-    if (!len_name || len_name < 4 || len_name > 16) {
-      message.error('账号长度不符合规定，请重新输入！');
-      return;
-    }
-    if (!len_pwd || len_pwd < 6 || len_pwd > 16) {
-      message.error('密码长度不符合规定，请重新输入！');
-      return;
-    }
     try {
       // 注册
       const res = await postUserRegister({
         ...values,
       });
-      if (res.result === 0) {
-        message.success('注册成功，请登录！');
-        setShowForm('login');
-        return;
-      }
-      message.error(res.msg);
+      message.success('注册成功，请登录！');
+      setShowForm('login');
       console.log(res);
     } catch (error) {
-      const defaultLoginFailureMessage = '注册失败，请重试！';
-      console.log(error);
-      // 使用message组件显示错误信息
-      message.error(defaultLoginFailureMessage);
+      // const defaultLoginFailureMessage = '注册失败，请重试！';
+      // // 使用message组件显示错误信息
+      // message.error(defaultLoginFailureMessage);
     }
   };
   const { status, type: loginType } = userLoginState;
@@ -329,6 +310,11 @@ const Login: React.FC = () => {
           }}
         >
           <LoginForm
+            submitter={{
+              searchConfig: {
+                submitText: '注册',
+              },
+            }}
             contentStyle={{
               minWidth: 280,
               maxWidth: '75vw',
@@ -375,7 +361,8 @@ const Login: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message: '账号是必填项！',
+                      pattern: /^.{3,16}$/,
+                      message: '账号必须大于3个字符并且小于17个字符',
                     },
                   ]}
                 />
@@ -389,7 +376,8 @@ const Login: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message: '密码是必填项！',
+                      pattern: /^.{5,16}$/,
+                      message: '密码必须大于5个字符且小于17个字符！',
                     },
                   ]}
                 />
@@ -403,7 +391,8 @@ const Login: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message: '确认密码是必填项！',
+                      pattern: /^.{5,16}$/,
+                      message: '密码必须大于5个字符且小于17个字符！',
                     },
                   ]}
                 />

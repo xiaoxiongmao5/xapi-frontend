@@ -41,7 +41,7 @@ const Index: React.FC = () => {
       setData(res.data);
     } catch (error: any) {
       // 请求失败时提示错误信息
-      message.error('请求失败，' + error.message);
+      // message.error('请求失败，' + error.message);
     }
     // 数据加载成功或失败后，设置loading状态为false
     setLoading(false);
@@ -57,19 +57,19 @@ const Index: React.FC = () => {
     message.error('该功能暂未上线，敬请期待！');
   };
 
-  // 获取调用体验次数10次
+  // 获取调用体验次数100次
   const getFreeInterface = async () => {
     setLoading(true);
     try {
       const res = await postUserinterfaceUpdateLeftcount({
         interfaceId: data?.id,
-        leftNum: 10,
+        leftNum: 100,
       });
       message.success('获取调用体验次数成功');
       console.log(res);
     } catch (error: any) {
       // 请求失败时提示错误信息
-      message.error('获取失败请重试，' + error.message);
+      // message.error('获取失败请重试，' + error.message);
     }
     setLoading(false);
     loadData();
@@ -94,7 +94,7 @@ const Index: React.FC = () => {
       setInvokeRes(res.data);
       message.success('请求成功');
     } catch (error: any) {
-      message.error('操作失败，' + error.message);
+      // message.error('操作失败，' + error.message);
     }
     // 无论成功或失败，最后将 invokeLoading 设置为false，表示加载完成
     setInitLoading(false);
