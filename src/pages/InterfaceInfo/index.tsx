@@ -125,6 +125,7 @@ const Index: React.FC = () => {
             <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
             <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
             <Descriptions.Item label="请求参数">{data.requestparams}</Descriptions.Item>
+            <Descriptions.Item label="请求参数示例">{data.requestparamsexample}</Descriptions.Item>
             <Descriptions.Item label="请求头">{data.requestheader}</Descriptions.Item>
             <Descriptions.Item label="响应头">{data.responseheader}</Descriptions.Item>
             <Descriptions.Item label="创建时间">{data.createtime}</Descriptions.Item>
@@ -135,13 +136,19 @@ const Index: React.FC = () => {
         )}
       </Card>
       <Divider />
-      <Card>
+      <Card loading={loading}>
         {/* 创建一个表单，名称为"invoke"，布局方式为垂直布局，当表单提交时调用 onFinish 方法 */}
-        <Form name="invoke" layout="vertical" onFinish={onFinish}>
+        <Form
+          name="invoke"
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={{ requestparams: data?.requestparamsexample }}
+        >
           {/* 创建一个表单项，用于输入请求参数，表单项名称为 "requestparams" */}
           <Form.Item label="请求参数" name="requestparams">
             <Input.TextArea />
           </Form.Item>
+
           {/* 创建一个包裹项，设置其宽度占据 16 个栅格列 */}
           <Form.Item wrapperCol={{ span: 16 }}>
             {/* 创建调用按钮 */}

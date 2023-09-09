@@ -226,6 +226,11 @@ const TableList: React.FC = () => {
       valueType: 'jsonCode',
     },
     {
+      title: '请求参数示例',
+      dataIndex: 'requestparamsexample',
+      valueType: 'jsonCode',
+    },
+    {
       title: '请求头',
       dataIndex: 'requestheader',
       valueType: 'jsonCode',

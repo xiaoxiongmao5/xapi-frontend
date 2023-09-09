@@ -6,6 +6,7 @@ declare namespace API {
     name?: string;
     requestheader?: string;
     requestparams?: string;
+    requestparamsexample?: string;
     responseheader?: string;
     url?: string;
     userid?: number;
@@ -57,6 +58,7 @@ declare namespace API {
     name?: string;
     requestheader?: string;
     requestparams?: string;
+    requestparamsexample?: string;
     responseheader?: string;
     url?: string;
     userid?: number;
@@ -88,11 +90,10 @@ declare namespace API {
     name?: string;
     /** 请求头 */
     requestheader?: string;
-    /** * 请求参数
-	[
-		{"name":"xxx", "type":"string"}
-	] */
+    /** 请求参数 */
     requestparams?: string;
+    /** 请求参数示例	[{"name":"xxx", "type":"string"}] */
+    requestparamsexample?: string;
     /** 响应头 */
     responseheader?: string;
     /** 接口状态（0-关闭，1-开启） */
@@ -123,8 +124,10 @@ declare namespace API {
     name?: string;
     /** 请求头 */
     requestheader?: string;
-    /** 请求参数 [{"name":"xxx", "type":"string"}] */
+    /** 请求参数 */
     requestparams?: string;
+    /** 请求参数示例	[{"name":"xxx", "type":"string"}] */
+    requestparamsexample?: string;
     /** 响应头 */
     responseheader?: string;
     /** 接口状态（0-关闭，1-开启） */
