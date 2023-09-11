@@ -1,0 +1,9 @@
+version: '3'
+services:
+  single-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # 映射容器的80端口到主机的80端口
+    restart: always  # 总是重新启动容器

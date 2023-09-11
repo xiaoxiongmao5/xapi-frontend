@@ -81,6 +81,9 @@ const Index: React.FC = () => {
       message.error('接口不存在');
       return;
     }
+    if (values.requestparams === '') {
+      values.requestparams = '{}';
+    }
     // 在开始调用接口之前，将 invokeLoading 设置为true，表示正在加载中
     setInitLoading(true);
     try {
@@ -136,7 +139,7 @@ const Index: React.FC = () => {
         )}
       </Card>
       <Divider />
-      <Card loading={loading}>
+      <Card loading={invokeLoading}>
         {/* 创建一个表单，名称为"invoke"，布局方式为垂直布局，当表单提交时调用 onFinish 方法 */}
         <Form
           name="invoke"

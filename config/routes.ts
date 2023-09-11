@@ -1,5 +1,10 @@
 export default [
-  { path: '/', name: '主页', icon: 'smile', component: './Index' },
+  {
+    path: '/',
+    name: '主页',
+    icon: 'smile',
+    component: './Index',
+  },
   {
     path: '/interface_info/:id',
     name: '查看接口',
@@ -10,8 +15,16 @@ export default [
   {
     path: '/user',
     layout: false,
-    routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
+    name: '登录注册页',
+    routes: [
+      { name: '登录', path: '/user/login', component: './User/Login' },
+      // { name: '注册', path: '/user/register', component: './User/Register' },
+    ],
   },
+  // {
+  //   path: '/user',
+  //   routes: [{ name: '个人信息', path: '/user/info', component: './User/Info' }],
+  // },
   {
     path: '/admin',
     name: '管理页',
@@ -21,9 +34,15 @@ export default [
       {
         name: '接口管理',
         icon: 'table',
-        path: '/admin/interface_into',
+        path: '/admin/interface_Info',
         component: './Admin/InterfaceInfo',
       },
+      // {
+      //   name: '接口分析',
+      //   icon: 'table',
+      //   path: '/admin/interface_analysis',
+      //   component: './Admin/InterfaceAnalysis',
+      // },
     ],
   },
   // { icon: 'table', path: '/list', component: './TableList', name: '表格页' },

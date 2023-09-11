@@ -17,9 +17,8 @@ const Settings: ProLayoutProps & {
   colorWeak: false,
   title: 'XAPI',
   pwa: true,
-  logo: 'https://img1.baidu.com/it/u=3636997260,1982564383&fm=253&fmt=auto&app=138&f=JPEG?w=633&h=500',
+  logo: '/logo.svg',
   // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.baid',
-  // logo: '/wechatphoto.jpeg',
   iconfontUrl: '',
   token: {
     // 参见ts声明，demo 见文档，通过token 修改样式

@@ -1,6 +1,9 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
+import { history } from '@umijs/max';
 import { message } from 'antd';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 // 错误处理方案： 错误类型
 enum ErrorShowType {
@@ -52,7 +55,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const requestConfig: RequestConfig = {
-  baseURL: 'http://localhost:8090',
+  baseURL: isDev ? 'http://localhost:8090' : 'http://localhost:8090',
   withCredentials: true,
 
   // 请求拦截器
@@ -84,8 +87,19 @@ export const requestConfig: RequestConfig = {
       const { data } = response as unknown as ResponseStructure;
       console.log('data', data);
       if (data?.result !== 0) {
-        message.error(data.msg);
-        throw new Error(data.msg);
+        // 服务端判断未授权，未登录
+        if (data.result === 401) {
+          history.push('/user/login');
+          // flushSync(() => {
+          //   setInitialState((s) => ({ ...s, loginUser: undefined }));
+          // });
+          // const { search, pathname } = window.location;
+          // const redirect = pathname + search;
+          // history.replace('/user/login', { redirect });
+        } else {
+          message.error(data.msg);
+          throw new Error(data.msg);
+        }
       }
       return response;
     },

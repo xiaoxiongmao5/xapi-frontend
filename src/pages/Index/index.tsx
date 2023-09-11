@@ -13,7 +13,7 @@ const Index: React.FC = () => {
   // 加载状态
   const [loading, setLoading] = useState(false);
   // 列表数据
-  const [list, setList] = useState<API.ValidXapiInterfaceInfo[]>([]);
+  const [list, setList] = useState<API.ValidInterfaceInfo[]>([]);
   // 总数
   const [total, setTotal] = useState<number>(0);
 
