@@ -12,6 +12,11 @@ declare namespace API {
     userid?: number;
   };
 
+  type getAnalysisTopInterfaceInvokeParams = {
+    /** TOP N */
+    n: number;
+  };
+
   type getInterfaceIdParams = {
     /** 接口id */
     id: number;
@@ -48,6 +53,12 @@ declare namespace API {
   type InvokeInterfaceParams = {
     id?: number;
     requestparams?: string;
+  };
+
+  type ListTopNOfInterfaceInvokeCountResponse = {
+    data?: ValidTopNOfInterfaceInvokeCountRow[];
+    msg?: string;
+    result?: number;
   };
 
   type UpdateInterfaceParams = {
@@ -104,6 +115,12 @@ declare namespace API {
     url?: string;
     /** 创建人 */
     userid?: number;
+  };
+
+  type ValidTopNOfInterfaceInvokeCountRow = {
+    interfaceinfoid?: number;
+    invokecount?: number;
+    name?: string;
   };
 
   type ValidUserInterfaceInfo = {
