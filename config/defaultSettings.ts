@@ -18,7 +18,6 @@ const Settings: ProLayoutProps & {
   title: 'XAPI',
   pwa: true,
   logo: '/logo.svg',
-  // logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.baid',
   iconfontUrl: '',
   token: {
     // 参见ts声明，demo 见文档，通过token 修改样式

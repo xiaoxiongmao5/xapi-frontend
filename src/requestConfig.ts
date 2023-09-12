@@ -55,7 +55,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const requestConfig: RequestConfig = {
-  baseURL: isDev ? 'http://localhost:8090' : 'http://60.204.157.168/:8090',
+  baseURL: isDev ? 'http://localhost:8090' : 'http://xpi-backend.com:8090',
   withCredentials: true,
 
   // 请求拦截器

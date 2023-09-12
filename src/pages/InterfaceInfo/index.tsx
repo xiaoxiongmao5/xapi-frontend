@@ -20,6 +20,9 @@ const Index: React.FC = () => {
   const [invokeRes, setInvokeRes] = useState<any>();
   // 调用加载状态变量，默认为false
   const [invokeLoading, setInitLoading] = useState(false);
+  const [initialRequestParams, setInitialRequestParams] = useState<string | undefined>(
+    data?.requestparamsexample,
+  );
 
   // 使用 useParams 钩子函数获取动态路由参数
   const params = useParams();
@@ -50,12 +53,17 @@ const Index: React.FC = () => {
   useEffect(() => {
     // 页面加载完成后调用加载数据的函数
     loadData();
+
+    // 在数据加载完成后，设置默认值
+    if (data?.requestparamsexample) {
+      setInitialRequestParams(data.requestparamsexample);
+    }
   }, []);
 
-  // 购买
-  const showAddOrderModal = async () => {
-    message.error('该功能暂未上线，敬请期待！');
-  };
+  // // 购买
+  // const showAddOrderModal = async () => {
+  //   message.error('该功能暂未上线，敬请期待！');
+  // };
 
   // 获取调用体验次数100次
   const getFreeInterface = async () => {
@@ -63,9 +71,9 @@ const Index: React.FC = () => {
     try {
       const res = await postUserinterfaceUpdateLeftcount({
         interfaceId: data?.id,
-        leftNum: 100,
+        leftNum: 10,
       });
-      message.success('获取调用体验次数成功');
+      message.success('成功获取调用次数');
       console.log(res);
     } catch (error: any) {
       // 请求失败时提示错误信息
@@ -75,15 +83,31 @@ const Index: React.FC = () => {
     loadData();
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // 获取用户输入的值
+    const inputValue = e.target.value;
+    console.log('长度=', inputValue.length);
+    if (inputValue !== '' && inputValue.length >= 7) {
+      // 更新 initialRequestParams 状态
+      setInitialRequestParams(inputValue);
+    }
+  };
+
   const onFinish = async (values: any) => {
     // 检查是否存在接口Id
     if (!params.id) {
       message.error('接口不存在');
       return;
     }
-    if (values.requestparams === '') {
-      values.requestparams = '{}';
+
+    if (data?.leftnum === 0) {
+      message.success('接口剩余可调用次数不足，请先获取');
+      return true;
     }
+
+    // if (values.requestparams === '' || values.requestparams === null) {
+    //   values.requestparams = '{}';
+    // }
     // 在开始调用接口之前，将 invokeLoading 设置为true，表示正在加载中
     setInitLoading(true);
     try {
@@ -102,6 +126,7 @@ const Index: React.FC = () => {
     // 无论成功或失败，最后将 invokeLoading 设置为false，表示加载完成
     setInitLoading(false);
     loadData();
+    return;
   };
 
   return (
@@ -113,11 +138,12 @@ const Index: React.FC = () => {
             title={data.name}
             column={1}
             extra={
-              data.leftnum === 0 && data.totalnum === 0 ? (
-                <Button onClick={getFreeInterface}>获取体验调用次数</Button>
-              ) : (
-                <Button onClick={showAddOrderModal}>购买</Button>
-              )
+              <Button onClick={getFreeInterface}>获取调用次数</Button>
+              // data.leftnum === 0 && data.totalnum === 0 ? (
+              //   <Button onClick={getFreeInterface}>获取体验调用次数</Button>
+              // ) : (
+              //   <Button onClick={showAddOrderModal}>购买</Button>
+              // )
             }
           >
             <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
@@ -139,17 +165,22 @@ const Index: React.FC = () => {
         )}
       </Card>
       <Divider />
-      <Card loading={invokeLoading}>
+
+      <Card title="在线调用" loading={invokeLoading}>
         {/* 创建一个表单，名称为"invoke"，布局方式为垂直布局，当表单提交时调用 onFinish 方法 */}
         <Form
           name="invoke"
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ requestparams: data?.requestparamsexample }}
+          initialValues={{ requestparams: initialRequestParams }}
         >
           {/* 创建一个表单项，用于输入请求参数，表单项名称为 "requestparams" */}
           <Form.Item label="请求参数" name="requestparams">
-            <Input.TextArea />
+            <Input.TextArea
+              autoSize={{ minRows: 2 }}
+              value={initialRequestParams}
+              onChange={handleInputChange}
+            />
           </Form.Item>
 
           {/* 创建一个包裹项，设置其宽度占据 16 个栅格列 */}
@@ -162,6 +193,7 @@ const Index: React.FC = () => {
         </Form>
       </Card>
       <Divider />
+
       <Card title="返回结果" loading={invokeLoading}>
         {invokeRes}
       </Card>

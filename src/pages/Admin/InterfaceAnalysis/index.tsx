@@ -48,8 +48,9 @@ const InterfaceAnalysis: React.FC = () => {
       trigger: 'item',
     },
     legend: {
-      orient: 'vertical',
-      left: 'left',
+      // orient: 'vertical',  //纵向展示
+      left: 'center',
+      bottom: 0,
     },
     series: [
       {

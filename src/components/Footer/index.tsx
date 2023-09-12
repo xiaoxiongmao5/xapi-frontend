@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         {
           key: 'GitHub',
           title: 'GitHub',
-          href: 'https://github.com/xiaoxiongmao5/xapi-backend',
+          href: 'https://github.com/xiaoxiongmao5/xapi',
           blankTarget: true,
         },
         {
