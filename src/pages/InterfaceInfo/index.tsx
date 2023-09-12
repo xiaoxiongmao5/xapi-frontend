@@ -20,9 +20,9 @@ const Index: React.FC = () => {
   const [invokeRes, setInvokeRes] = useState<any>();
   // 调用加载状态变量，默认为false
   const [invokeLoading, setInitLoading] = useState(false);
-  const [initialRequestParams, setInitialRequestParams] = useState<string | undefined>(
-    data?.requestparamsexample,
-  );
+  // const [initialRequestParams, setInitialRequestParams] = useState<string | undefined>(
+  //   data?.requestparamsexample ? data?.requestparamsexample : '{}',
+  // );
 
   // 使用 useParams 钩子函数获取动态路由参数
   const params = useParams();
@@ -42,6 +42,7 @@ const Index: React.FC = () => {
       });
       // 将获取到的接口信息设置到 data 状态中
       setData(res.data);
+      // setInitialRequestParams(res.data?.requestparamsexample);
     } catch (error: any) {
       // 请求失败时提示错误信息
       // message.error('请求失败，' + error.message);
@@ -51,13 +52,10 @@ const Index: React.FC = () => {
   };
 
   useEffect(() => {
-    // 页面加载完成后调用加载数据的函数
-    loadData();
-
-    // 在数据加载完成后，设置默认值
-    if (data?.requestparamsexample) {
-      setInitialRequestParams(data.requestparamsexample);
-    }
+    setTimeout(() => {
+      // 页面加载完成后调用加载数据的函数
+      loadData();
+    });
   }, []);
 
   // // 购买
@@ -83,15 +81,15 @@ const Index: React.FC = () => {
     loadData();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // 获取用户输入的值
-    const inputValue = e.target.value;
-    console.log('长度=', inputValue.length);
-    if (inputValue !== '' && inputValue.length >= 7) {
-      // 更新 initialRequestParams 状态
-      setInitialRequestParams(inputValue);
-    }
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   // 获取用户输入的值
+  //   const inputValue = e.target.value;
+  //   console.log('长度=', inputValue.length);
+  //   if (inputValue !== '' && inputValue.length >= 7) {
+  //     // 更新 initialRequestParams 状态
+  //     setInitialRequestParams(inputValue);
+  //   }
+  // };
 
   const onFinish = async (values: any) => {
     // 检查是否存在接口Id
@@ -105,9 +103,6 @@ const Index: React.FC = () => {
       return true;
     }
 
-    // if (values.requestparams === '' || values.requestparams === null) {
-    //   values.requestparams = '{}';
-    // }
     // 在开始调用接口之前，将 invokeLoading 设置为true，表示正在加载中
     setInitLoading(true);
     try {
@@ -166,20 +161,20 @@ const Index: React.FC = () => {
       </Card>
       <Divider />
 
-      <Card title="在线调用" loading={invokeLoading}>
+      <Card title="在线调用" loading={loading}>
         {/* 创建一个表单，名称为"invoke"，布局方式为垂直布局，当表单提交时调用 onFinish 方法 */}
         <Form
           name="invoke"
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ requestparams: initialRequestParams }}
+          initialValues={{ requestparams: data?.requestparamsexample }}
         >
           {/* 创建一个表单项，用于输入请求参数，表单项名称为 "requestparams" */}
           <Form.Item label="请求参数" name="requestparams">
             <Input.TextArea
               autoSize={{ minRows: 2 }}
-              value={initialRequestParams}
-              onChange={handleInputChange}
+              // value={initialRequestParams}
+              // onChange={handleInputChange}
             />
           </Form.Item>
 
