@@ -75,7 +75,7 @@ export default defineConfig({
    */
   title: 'XAPI',
   layout: {
-    locale: true,
+    locale: false,
     ...defaultSettings,
   },
   /**

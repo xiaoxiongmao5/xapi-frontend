@@ -149,7 +149,7 @@ const Login: React.FC = () => {
               minWidth: 280,
               maxWidth: '75vw',
             }}
-            logo={<img alt="logo" src="/wechatphoto.jpeg" />}
+            logo={<img alt="logo" src="/logo.svg" />}
             title="X API"
             subTitle={'一个 API 开放调用平台'}
             initialValues={{
@@ -319,7 +319,7 @@ const Login: React.FC = () => {
               minWidth: 280,
               maxWidth: '75vw',
             }}
-            logo={<img alt="logo" src="/wechatphoto.jpeg" />}
+            logo={<img alt="logo" src="/logo.svg" />}
             title="X API"
             subTitle={'一个 API 开放调用平台'}
             initialValues={{

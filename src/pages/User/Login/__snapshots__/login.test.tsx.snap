@@ -189,7 +189,7 @@ exports[`Login Page should login success 1`] = `
                   <img
                     alt="logo"
                     height="22"
-                    src="/wechatphoto.jpeg"
+                    src="/logo.svg"
                     width="auto"
                   />
                   <h1>
@@ -625,7 +625,7 @@ exports[`Login Page should show login form 1`] = `
             >
               <img
                 alt="logo"
-                src="/wechatphoto.jpeg"
+                src="/logo.svg"
               />
             </span>
             <span
