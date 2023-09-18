@@ -138,7 +138,7 @@ const Index: React.FC = () => {
       <Card loading={loading}>
         {data ? (
           <div
-            className="descriptions-container"
+            className="interfaceinfo-descriptions-container"
             // style={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <Descriptions title={data.name} column={1}>

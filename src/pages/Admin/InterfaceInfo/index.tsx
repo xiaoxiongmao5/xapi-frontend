@@ -172,11 +172,15 @@ const TableList: React.FC = () => {
     {
       title: 'id',
       dataIndex: 'id',
+      key: 'id',
       valueType: 'index',
     },
     {
       title: '接口名称',
       dataIndex: 'name',
+      key: 'name',
+      width: 200,
+      fixed: 'left',
       valueType: 'text',
       formItemProps: {
         rules: [
@@ -203,52 +207,60 @@ const TableList: React.FC = () => {
     {
       title: '描述',
       dataIndex: 'description',
+      key: 'description',
       valueType: 'textarea',
     },
     {
       title: '请求方法',
       dataIndex: 'method',
+      key: 'method',
       valueType: 'text',
     },
     {
       title: '域名',
       dataIndex: 'host',
+      key: 'host',
       valueType: 'text',
       hideInTable: false,
     },
     {
       title: '接口地址',
       dataIndex: 'url',
+      key: 'url',
       valueType: 'text',
     },
     {
       title: '请求参数',
       dataIndex: 'requestparams',
+      key: 'requestparams',
       valueType: 'jsonCode',
     },
     {
       title: '请求参数示例',
       dataIndex: 'requestparamsexample',
+      key: 'requestparamsexample',
       valueType: 'jsonCode',
       hideInTable: true,
     },
     {
       title: '请求头',
       dataIndex: 'requestheader',
+      key: 'requestheader',
       valueType: 'jsonCode',
       hideInTable: true,
     },
     {
       title: '响应头',
       dataIndex: 'responseheader',
+      key: 'responseheader',
       valueType: 'jsonCode',
       hideInTable: true,
     },
     {
       title: '状态',
       dataIndex: 'status',
+      key: 'status',
       hideInForm: true,
-      valueType: 'text',
       valueEnum: {
         0: {
           text: '关闭',
@@ -263,18 +275,22 @@ const TableList: React.FC = () => {
     {
       title: '创建时间',
       dataIndex: 'createtime',
+      key: 'createtime',
       valueType: 'dateTime',
       hideInForm: true,
     },
     {
       title: '更新时间',
       dataIndex: 'updatetime',
+      key: 'updatetime',
       valueType: 'dateTime',
       hideInForm: true,
     },
     {
       title: '操作',
       dataIndex: 'option',
+      key: 'operation',
+      fixed: 'right',
       valueType: 'option',
       render: (_, record) => [
         <Button
@@ -381,6 +397,8 @@ const TableList: React.FC = () => {
         //   }
         // }}
         columns={columns}
+        pagination={{ pageSize: 10 }}
+        // scroll={{ x:1300, y: 500 }}
         rowSelection={{
           onChange: (_, selectedRows) => {
             setSelectedRows(selectedRows);
