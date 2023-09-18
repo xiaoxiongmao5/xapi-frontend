@@ -1,4 +1,4 @@
-import { getInterfacePagelist } from '@/services/xapi-backend/jiekouxiangguan';
+import { getInterfacePagelistOnline } from '@/services/xapi-backend/jiekouxiangguan';
 import { PageContainer } from '@ant-design/pro-components';
 import { List } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -18,12 +18,18 @@ const Index: React.FC = () => {
   const [total, setTotal] = useState<number>(0);
 
   // 定义异步加载数据的函数
-  const loadData = async (current = 1, pageSize = 5) => {
+  const loadData = async (current = 1, pageSize = 10) => {
     // 开始加载数据，设置loading状态为true
     setLoading(true);
     try {
       // 调用接口获取数据
-      const res = await getInterfacePagelist({ current, pageSize });
+      const res = await getInterfacePagelistOnline({ current, pageSize });
+
+      // // 过滤出 status 等于 1 的列表项
+      // const filteredList = (res?.data?.record || []).filter((item) => item.status === 1);
+      // // 将过滤后的列表数据设置到列表数据状态中
+      // setList(filteredList);
+
       // 将请求返回的数据设置到列表数据状态中
       setList(res?.data?.record ?? []);
       // 将请求返回的总数设置到总数状态中
@@ -55,6 +61,8 @@ const Index: React.FC = () => {
         renderItem={(item) => {
           // 构建列表项的链接地址
           const apiLink = `/interface_info/${item.id}`;
+          // 只渲染status等于1的列表项
+          // if (item.status === 1) {
           return (
             // 显式查看链接
             <List.Item
@@ -72,6 +80,9 @@ const Index: React.FC = () => {
               />
             </List.Item>
           );
+          // }
+          // // 如果status不等于1，则返回null，表示不渲染该列表项
+          // return null;
         }}
         // 分页配置
         pagination={{
@@ -80,7 +91,7 @@ const Index: React.FC = () => {
             return '总数：' + total;
           },
           // 每页显示条数
-          pageSize: 5,
+          pageSize: 10,
           // 总数，从状态中获取
           total,
           // 切换页面触发的回调函数

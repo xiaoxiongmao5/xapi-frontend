@@ -7,6 +7,7 @@ import { PageContainer } from '@ant-design/pro-components';
 import { Button, Card, Descriptions, Divider, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import './index.less';
 
 /**
  * 主页
@@ -113,7 +114,14 @@ const Index: React.FC = () => {
         ...values,
       });
       // 将接口调用的结果更新到 invokeRes 状态变量中
-      setInvokeRes(res.data);
+      // setInvokeRes(JSON.stringify(res.data, null, 2)); // 使用null和2来格式化JSON字符串
+      console.log('typeof res=', typeof res);
+      if (typeof res === 'string') {
+        setInvokeRes(res);
+      } else {
+        setInvokeRes(JSON.stringify(res, null, 2)); // 使用null和2来格式化JSON字符串
+      }
+      // 使用JSON.stringify将JSON对象转换为字符串
       message.success('请求成功');
     } catch (error: any) {
       // message.error('操作失败，' + error.message);
@@ -129,39 +137,51 @@ const Index: React.FC = () => {
     <PageContainer title="查看接口文档">
       <Card loading={loading}>
         {data ? (
-          <Descriptions
-            title={data.name}
-            column={1}
-            extra={
-              <Button onClick={getFreeInterface}>获取调用次数</Button>
-              // data.leftnum === 0 && data.totalnum === 0 ? (
-              //   <Button onClick={getFreeInterface}>获取体验调用次数</Button>
-              // ) : (
-              //   <Button onClick={showAddOrderModal}>购买</Button>
-              // )
-            }
+          <div
+            className="descriptions-container"
+            // style={{ display: 'flex', justifyContent: 'space-between' }}
           >
-            <Descriptions.Item label="接口状态">{data.status ? '开启' : '关闭'}</Descriptions.Item>
-            <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
-            <Descriptions.Item label="接口剩余调用次数">{data.leftnum}次</Descriptions.Item>
-            <Descriptions.Item label="接口总调用次数">{data.totalnum}次</Descriptions.Item>
-            <Descriptions.Item label="域名">{data.host}</Descriptions.Item>
-            <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
-            <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
-            <Descriptions.Item label="请求参数">{data.requestparams}</Descriptions.Item>
-            <Descriptions.Item label="请求参数示例">{data.requestparamsexample}</Descriptions.Item>
-            <Descriptions.Item label="请求头">{data.requestheader}</Descriptions.Item>
-            <Descriptions.Item label="响应头">{data.responseheader}</Descriptions.Item>
-            <Descriptions.Item label="创建时间">{data.createtime}</Descriptions.Item>
-            <Descriptions.Item label="更新时间">{data.updatetime}</Descriptions.Item>
-          </Descriptions>
+            <Descriptions title={data.name} column={1}>
+              <Descriptions.Item label="接口状态">
+                {data.status ? '开启' : '关闭'}
+              </Descriptions.Item>
+              <Descriptions.Item label="描述">{data.description}</Descriptions.Item>
+              <Descriptions.Item label="接口剩余调用次数">{data.leftnum}次</Descriptions.Item>
+              <Descriptions.Item label="接口总调用次数">{data.totalnum}次</Descriptions.Item>
+              <Descriptions.Item label="创建时间">{data.createtime}</Descriptions.Item>
+              <Descriptions.Item label="更新时间">{data.updatetime}</Descriptions.Item>
+            </Descriptions>
+
+            <Descriptions title="接口协议信息" column={1}>
+              {/* <Descriptions.Item label="域名">{data.host}</Descriptions.Item> */}
+              <Descriptions.Item label="请求地址">{data.url}</Descriptions.Item>
+              <Descriptions.Item label="请求方法">{data.method}</Descriptions.Item>
+              <Descriptions.Item label="请求参数">{data.requestparams}</Descriptions.Item>
+              <Descriptions.Item label="请求参数示例">
+                {data.requestparamsexample}
+              </Descriptions.Item>
+              <Descriptions.Item label="请求头">{data.requestheader}</Descriptions.Item>
+              <Descriptions.Item label="响应头">{data.responseheader}</Descriptions.Item>
+            </Descriptions>
+          </div>
         ) : (
           <>接口不存在</>
         )}
       </Card>
       <Divider />
 
-      <Card title="在线调用" loading={loading}>
+      <Card
+        title="在线调用"
+        loading={loading}
+        extra={
+          <Button onClick={getFreeInterface}>获取调用次数</Button>
+          // data.leftnum === 0 && data.totalnum === 0 ? (
+          //   <Button onClick={getFreeInterface}>获取体验调用次数</Button>
+          // ) : (
+          //   <Button onClick={showAddOrderModal}>购买</Button>
+          // )
+        }
+      >
         {/* 创建一个表单，名称为"invoke"，布局方式为垂直布局，当表单提交时调用 onFinish 方法 */}
         <Form
           name="invoke"
@@ -190,7 +210,7 @@ const Index: React.FC = () => {
       <Divider />
 
       <Card title="返回结果" loading={invokeLoading}>
-        {invokeRes}
+        <pre>{invokeRes}</pre>
       </Card>
     </PageContainer>
   );

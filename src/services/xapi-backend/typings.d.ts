@@ -28,11 +28,23 @@ declare namespace API {
     result?: number;
   };
 
+  type getInterfacePagelistOnlineParams = {
+    /** pageSize */
+    pageSize: number;
+    /** current */
+    current: number;
+  };
+
   type getInterfacePagelistParams = {
     /** pageSize */
     pageSize: number;
     /** current */
     current: number;
+  };
+
+  type getManageConfigRatelimitParams = {
+    /** ip地址 */
+    ip: string;
   };
 
   type getUserinterfaceIdParams = {
@@ -59,6 +71,12 @@ declare namespace API {
     data?: ValidTopNOfInterfaceInvokeCountRow[];
     msg?: string;
     result?: number;
+  };
+
+  type RateLimitConfig = {
+    bucket_size?: number;
+    ip?: string;
+    requests_per_second?: number;
   };
 
   type UpdateInterfaceParams = {

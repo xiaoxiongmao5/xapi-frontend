@@ -1,6 +1,7 @@
 import { getAnalysisTopInterfaceInvoke } from '@/services/xapi-backend/fenxitongjiyonghuyujiekouguanxi';
 import { PageContainer } from '@ant-design/pro-components';
 import '@umijs/max';
+import { Input } from 'antd';
 import ReactECharts from 'echarts-for-react'; // render echarts option.
 import { useEffect, useState } from 'react';
 const InterfaceAnalysis: React.FC = () => {
@@ -8,16 +9,16 @@ const InterfaceAnalysis: React.FC = () => {
   const [data, setData] = useState<API.ValidTopNOfInterfaceInvokeCountRow[]>([]);
   // 控制加载状态的状态，默认加载中（true）
   const [loading, setLoading] = useState(true);
-
-  const TOPN = 3;
+  const [topN, setTopN] = useState(5);
 
   // 定义异步加载数据的函数
-  const loadData = async (n = TOPN) => {
+  // const loadData = async (n = TOPN) => {
+  const loadData = async () => {
     // 开始加载数据，设置loading状态为true
     setLoading(true);
     try {
       // 调用接口获取数据
-      const res = await getAnalysisTopInterfaceInvoke({ n });
+      const res = await getAnalysisTopInterfaceInvoke({ n: topN });
       setData(res.data);
     } catch (error: any) {
       // 请求失败时提示错误信息
@@ -29,7 +30,7 @@ const InterfaceAnalysis: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, []); // 空数组表示仅在组件挂载时执行 useEffect
+  }, [topN]); // 空数组表示仅在组件挂载时执行 useEffect
 
   const chartData = data.map((item) => {
     return {
@@ -41,7 +42,7 @@ const InterfaceAnalysis: React.FC = () => {
   // EChats图表的配置选项
   const option = {
     title: {
-      text: '调用次数最多的接口TOP' + TOPN,
+      text: '调用次数最多的接口TOP' + topN,
       left: 'center',
     },
     tooltip: {
@@ -71,6 +72,22 @@ const InterfaceAnalysis: React.FC = () => {
   return (
     // 渲染组件内容，可以根据 loading 和 data 进行不同的渲染
     <PageContainer>
+      <div
+        style={{
+          textAlign: 'left',
+          margin: 'auto',
+          marginBottom: '20px',
+        }}
+      >
+        <b>TOP : </b>
+        <Input
+          style={{ width: 200 }}
+          type="number"
+          placeholder="Enter TOPN value"
+          value={topN}
+          onChange={(e) => setTopN(e.target.value)}
+        />
+      </div>
       {/* 使用 ReactECharts 组件，传入图表配置 */}
       <ReactECharts
         loadingOption={{

@@ -78,6 +78,21 @@ export async function getInterfacePagelist(
   });
 }
 
+/** 分页获得已发布接口列表 分页获取已发布接口列表 GET /interface/pagelist/online */
+export async function getInterfacePagelistOnline(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getInterfacePagelistOnlineParams,
+  options?: { [key: string]: any },
+) {
+  return request<Record<string, any>>('/interface/pagelist/online', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 注册接口 注册接口 POST /interface/register */
 export async function postInterfaceRegister(
   body: API.CreateInterfaceParams,

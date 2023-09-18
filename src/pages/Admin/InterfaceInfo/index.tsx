@@ -214,6 +214,7 @@ const TableList: React.FC = () => {
       title: '域名',
       dataIndex: 'host',
       valueType: 'text',
+      hideInTable: false,
     },
     {
       title: '接口地址',
@@ -229,21 +230,25 @@ const TableList: React.FC = () => {
       title: '请求参数示例',
       dataIndex: 'requestparamsexample',
       valueType: 'jsonCode',
+      hideInTable: true,
     },
     {
       title: '请求头',
       dataIndex: 'requestheader',
       valueType: 'jsonCode',
+      hideInTable: true,
     },
     {
       title: '响应头',
       dataIndex: 'responseheader',
       valueType: 'jsonCode',
+      hideInTable: true,
     },
     {
       title: '状态',
       dataIndex: 'status',
       hideInForm: true,
+      valueType: 'text',
       valueEnum: {
         0: {
           text: '关闭',
@@ -272,37 +277,60 @@ const TableList: React.FC = () => {
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
-        <a
+        <Button
           key="update"
+          type="primary"
           onClick={() => {
             handleUpdateModalOpen(true);
             setCurrentRow(record);
           }}
         >
           修改
-        </a>,
+        </Button>,
+        // <a
+        //   key="update"
+        //   onClick={() => {
+        //     handleUpdateModalOpen(true);
+        //     setCurrentRow(record);
+        //   }}
+        // >
+        //   修改
+        // </a>,
         record.status === 0 ? (
-          <a
+          // <a
+          //   key="online"
+          //   onClick={() => {
+          //     handleOnline(record);
+          //   }}
+          // >
+          //   发布
+          // </a>
+          <Button
+            style={{ backgroundColor: 'orange' }}
             key="online"
+            type="primary"
             onClick={() => {
               handleOnline(record);
             }}
           >
             发布
-          </a>
+          </Button>
         ) : null,
         record.status === 1 ? (
-          <a
+          <Button
+            style={{ backgroundColor: '#333' }}
             key="offline"
+            type="primary"
             onClick={() => {
               handleOffline(record);
             }}
           >
             下线
-          </a>
+          </Button>
         ) : null,
         <Button
-          type="text"
+          // type="text"
+          type="primary"
           danger
           key="delete"
           onClick={() => {

@@ -1,7 +1,5 @@
 ﻿import type { RequestOptions } from '@@/plugin-request/request';
 import type { RequestConfig } from '@umijs/max';
-import { history } from '@umijs/max';
-import { message } from 'antd';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -84,8 +82,16 @@ export const requestConfig: RequestConfig = {
   responseInterceptors: [
     (response) => {
       // 拦截响应数据，进行个性化处理
+      const { config } = response;
       const { data } = response as unknown as ResponseStructure;
       console.log('data', data);
+
+      // 判断请求地址是否是某个特定的接口
+      if (config.url === '/api/invoke') {
+        // 不对特定接口应用响应拦截器，直接返回响应
+        return response;
+      }
+
       if (data?.result !== 0) {
         // 服务端判断未授权，未登录
         if (data.result === 401) {
