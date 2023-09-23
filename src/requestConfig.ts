@@ -84,7 +84,8 @@ export const requestConfig: RequestConfig = {
       // 拦截响应数据，进行个性化处理
       const { config } = response;
       const { data } = response as unknown as ResponseStructure;
-      console.log('data', data);
+      // console.log('data', data);
+      console.log('response=', response);
 
       // 判断请求地址是否是某个特定的接口
       if (config.url === '/api/invoke') {

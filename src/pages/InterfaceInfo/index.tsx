@@ -115,14 +115,23 @@ const Index: React.FC = () => {
       });
       // 将接口调用的结果更新到 invokeRes 状态变量中
       // setInvokeRes(JSON.stringify(res.data, null, 2)); // 使用null和2来格式化JSON字符串
-      console.log('typeof res=', typeof res);
-      if (typeof res === 'string') {
+      const resType = typeof res;
+      console.log('postApiInvoke typeof res=', resType);
+
+      if (resType === 'string') {
         setInvokeRes(res);
       } else {
         setInvokeRes(JSON.stringify(res, null, 2)); // 使用null和2来格式化JSON字符串
       }
-      // 使用JSON.stringify将JSON对象转换为字符串
-      message.success('请求成功');
+
+      if (
+        resType === 'object' &&
+        (res?.result === -1 || res?.result === -2 || res?.result === 4000)
+      ) {
+        message.error(res?.msg);
+      } else {
+        message.success('请求成功');
+      }
     } catch (error: any) {
       // message.error('操作失败，' + error.message);
     }
